@@ -1,0 +1,9 @@
+parameters:
+    excludePaths:
+        - 'app/Orchid'
+        - 'app/Providers/RouteServiceProvider'
+        - 'app/Http/Middleware/Authenticate'
+    paths:
+        - app
+        - tests
+    level: 4
