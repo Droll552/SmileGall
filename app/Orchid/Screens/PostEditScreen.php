@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Orchid\Screen\Actions\Link;
+use Orchid\Screen\Fields\Cropper;
 use Orchid\Screen\Fields\Input;
 use Orchid\Screen\Fields\Quill;
 use Orchid\Screen\Fields\Relation;
@@ -33,6 +34,8 @@ class PostEditScreen extends Screen
      */
     public function query(Post $post): array
     {
+        $post->load('attachment');
+
         return [
             'post' => $post
         ];
@@ -93,6 +96,12 @@ class PostEditScreen extends Screen
                     ->placeholder('Attractive but mysterious title')
                     ->help('Specify a short descriptive title for this post.'),
 
+                Cropper::make('post.hero')
+                    ->targetId()
+                    ->title('Large web banner image, generally in the front and center')
+                    ->width(1000)
+                    ->height(500),
+
                 TextArea::make('post.description')
                     ->title('Description')
                     ->rows(3)
@@ -106,6 +115,9 @@ class PostEditScreen extends Screen
                 Quill::make('post.body')
                     ->title('Main text'),
 
+                Upload::make('post.attachment')
+                    ->title('All files')
+
             ])
         ];
     }
@@ -116,13 +128,17 @@ class PostEditScreen extends Screen
      *
      * @return RedirectResponse
      */
-    public function createOrUpdate(Post $post, Request $request): RedirectResponse
+    public function createOrUpdate(Post $post, Request $request): void // RedirectResponse
     {
         $post->fill($request->get('post'))->save();
 
+        $post->attachment()->syncWithoutDetaching(
+            $request->input('post.attachment', [])
+        );
+
         Alert::info('You have successfully created an post.');
 
-        return redirect()->route('platform.post.list');
+//        return redirect()->route('platform.post.list');
     }
 
     /**
