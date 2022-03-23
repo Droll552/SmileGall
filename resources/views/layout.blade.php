@@ -3,7 +3,13 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- Scripts -->
+        <script src="{{ asset('js/app.js') }}" defer></script>
+
+        <!-- Styles -->
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+
         <title>Smile Gallery</title>
     </head>
     <body class="antialiased">
