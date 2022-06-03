@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use Orchid\Platform\Models\User as Authenticatable;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {

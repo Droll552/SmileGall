@@ -1,6 +1,5 @@
 parameters:
     excludePaths:
-        - 'app/Orchid'
         - 'app/Providers/RouteServiceProvider'
         - 'app/Http/Middleware/Authenticate'
     paths:
